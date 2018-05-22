@@ -1,4 +1,7 @@
-﻿
+﻿@using ElectronicLogbookModel
+@model Visitor
+
+
 @{
     ViewBag.Title = "Index";
 }
@@ -28,7 +31,6 @@
         color: #000;
     }*/
     table {
-      
         border-spacing: 0;
         width: 100%;
         border: 1px solid #ddd;
@@ -110,7 +112,6 @@
             text-decoration: none;
             cursor: pointer;
         }
-
 </style>
 
 <center><h3>&nbsp;Visitor/Applicant Information</h3></center>
@@ -191,7 +192,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <table id="tableid" class="table table-hover table-sm table-bordered">
         <tr>
-           
+
             <th onclick="sortTable2(1)">Full Name <span class="glyphicon glyphicon-sort"></span></th>
             <th onclick="sortTable2(2)">Company Name <span class="glyphicon glyphicon-sort"></span></th>
 
@@ -205,34 +206,36 @@
             <th style="width:100px"></th>
         </tr>
         <tr class="alert" ng-repeat="Visitor in model.Visitors | orderBy: '-VisitorID'" ng-click="$event.originalEvent.dropdown || model.GoToUpdatePage(Visitor.VisitorId)" style="cursor:pointer" filter="">
-           
+
             <td><span ng-bind="Visitor.FirstName + ' ' + Visitor.MiddleName + ' ' + Visitor.LastName"></span></td>
 
             @*<td></td>
-                <td><span ng-bind="Visitor.Name"></span></td>*@
+        <td><span ng-bind="Visitor.Name"></span></td>*@
             <td id="company_id"><span ng-bind="Visitor.CompanyName"></span></td>
             <td><span ng-bind="Visitor.Purpose"></span></td>
-            <td><span ng-bind="Visitor.EmployeeToVisit.FirstName"></span> <span ng-bind="Visitor.EmployeeToVisit.MiddleName"></span>
+            <td>
+                <span ng-bind="Visitor.EmployeeToVisit.FirstName"></span> <span ng-bind="Visitor.EmployeeToVisit.MiddleName"></span>
                 <span ng-bind="Visitor.EmployeeToVisit.LastName"></span>
             </td>
             <td><span ng-bind="Visitor.KindOfId"></span></td>
             <td><span ng-bind="Visitor.IdNumber"></span></td>
-            <td><span ng-bind= "Visitor.TimeIn | date: 'yyyy/MM/dd HH:mm'"></span></td>
-            <td>
-                <span ng-bind="Visitor.TimeOut | date: 'yyyy/MM/dd HH:mm'"></span>
+            <td><span ng-bind="Visitor.TimeIn | date: 'yyyy/MM/dd HH:mm'"></span></td>
+            <td id="RealTime"><span ng-model="TimeOutString" ng-bind="Visitor.TimeOut | date:'yyyy/MM/dd HH:mm' "></span></td>
+    
+           
+
+
+            @*<p id="date_time_button"></p>*@
+            @* <input type="text" class="form-control" name="Visitor.TimeOut" value="@Model.TimeOut" />*@
 
 
 
-                @*<p id="date_time_button"></p>*@
-                @* <input type="text" class="form-control" name="Visitor.TimeOut" value="@Model.TimeOut" />*@
-            </td>
-
-            <td>
-                      @*  <a href="" type="button" class="btn btn-primary" role="button" id="Timeout" onclick="Timeout()">Time out</a>*@
+            <td id="RealTime">
+                @*  <a href="" type="button" class="btn btn-primary" role="button" id="Timeout" onclick="Timeout()">Time out</a>*@
                 @*  <button id="mybtnFunction" onclick="mybtnFunction()">Time out</button>*@
                 @*<a href="/Visitor/Index"><input type="Submit" value="TimeOut" class="btn btn-primary" style="" id="mybtnFunction" onclick="mybtnFunction()" /><i class="glyphicon glyphicon-bell"></i></a>*@
-
-                <a href="/Visitor/Index" ng-click="model.Details(Visitor)" id="mybtnFunction" onclick="mybtnFunction()" type="button" class="btn btn-primary"> <i class="glyphicon glyphicon-bell"></i> Timeout</a>
+        
+                <a href="/Visitor/Index" ng-click="model.TimeOut(Visitor)" onclick="mybtnFunction()" type="button" class="btn btn-primary"> <i class="glyphicon glyphicon-bell"></i> Timeout</a>
 
             </td>
             <td>
@@ -242,20 +245,11 @@
     </table>
     <script>
 
-        /////////////////////////////////////////////////////////////////////////////////////
+     
+   
 
 
-
-        //function mybtnFunction() {
-
-        //    var d = new Date();
-        //    document.getElementById("date_time_button").innerHTML = d.toLocaleTimeString();
-
-
-
-
-        ////}
-        //////////////////////////////////////////////////////////////////////////////
+        
 
         function sortTable() {
             var table, rows, switching, i, x, y, shouldSwitch;
@@ -505,7 +499,7 @@
             return !isNaN(parseFloat(n)) && isFinite(n);
         }
 
-                // Attach listener to table
+                    // Attach listener to table
 
 
 

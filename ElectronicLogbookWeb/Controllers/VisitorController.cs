@@ -201,6 +201,7 @@ namespace ElectronicLogbookWeb.Controllers
             try
             {
                 visitor = _iFVisitor.Update(visitor);
+            
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
